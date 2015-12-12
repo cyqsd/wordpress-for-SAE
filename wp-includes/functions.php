@@ -1877,8 +1877,9 @@ function wp_upload_dir( $time = null ) {
 		}
 	}
 
-	$basedir = $dir;
+	//$basedir = $dir;
 	$baseurl = $url;
+	$basedir = $dir = 'saestor://wp-content/uploads';
 
 	$subdir = '';
 	if ( get_option( 'uploads_use_yearmonth_folders' ) ) {
