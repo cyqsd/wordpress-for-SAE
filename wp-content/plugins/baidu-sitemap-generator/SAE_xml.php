@@ -1,0 +1,9 @@
+<?php
+/**
+Author:Gimhoy
+URI: http://blog.gimhoy.com/archives/baidu-sitemap-generator-for-sae-kv.html
+*/
+ header("Content-type: application/xml; charset=utf-8"); 
+ $sitemap = file_get_contents("saekv://wordpress/sitemap_baidu.xml");
+ echo $sitemap;
+ ?>
