@@ -420,13 +420,7 @@ abstract class WP_Image_Editor {
 			wp_mkdir_p( dirname( $filename ) );
 		}
 
-		//$result = call_user_func_array( $function, $arguments );
-		$arguments_temp = $arguments;
-		$arguments_temp[1] = SAE_TMP_PATH.'image_temp.dat';
-		$result = call_user_func_array( $function, $arguments_temp );
-		if ($result) {
-			file_put_contents($arguments[1],file_get_contents(SAE_TMP_PATH.'image_temp.dat'));
-		}
+		$result = call_user_func_array( $function, $arguments );
 
 		if ( $result && $stream ) {
 			$contents = ob_get_contents();

@@ -3,9 +3,10 @@
  * Main WordPress API
  *
  * @package WordPress
+ *
+ * @modified by cyqsd (www.cyqsd.cn)
  */
-include( ABSPATH . '/sae.php' );  //调用SAE的Storage文件域名设置  //for SAE
- 
+
 require( ABSPATH . WPINC . '/option.php' );
 
 /**
@@ -1550,29 +1551,25 @@ function wp_get_original_referer() {
  * @return bool Whether the path was created. True if path already exists.
  */
 function wp_mkdir_p( $target ) {
-	//$wrapper = null;
+//	$wrapper = null;
 
 	// Strip the protocol.
-	//if ( wp_is_stream( $target ) ) {
-	//	list( $wrapper, $target ) = explode( '://', $target, 2 );
-	//}
+//	if ( wp_is_stream( $target ) ) {
+//		list( $wrapper, $target ) = explode( '://', $target, 2 );
+//	}
 
 	// From php.net/mkdir user contributed notes.
-	//$target = str_replace( '//', '/', $target );
+//	$target = str_replace( '//', '/', $target );
 
 	// Put the wrapper back on the target.
-	//if ( $wrapper !== null ) {
-	//	$target = $wrapper . '://' . $target;
-	//}
-	
-	
-	//for SAE begin
-    // from php.net/mkdir user contributed notes
-      if ( substr($target, 0, 10) == 'saestor://' ) {
-       return true;
-      }
+//	if ( $wrapper !== null ) {
+//		$target = $wrapper . '://' . $target;
+//	}
+//   for sina sae
+    if ( substr($target, 0, 10) == 'saestor://' ) {
+	    return true;
+     }
      $target = str_replace( '//', '/', $target );
-    //for SAE end
 
 	/*
 	 * Safe mode fails with a trailing slash under certain PHP versions.
@@ -1886,14 +1883,10 @@ function wp_upload_dir( $time = null ) {
 			$url = trailingslashit( $siteurl ) . 'files';
 		}
 	}
-	
-	
-
-    // for SAE begin
+     
+	 //for sina sae
     $dir = SAE_DIR;
     $url = SAE_URL;
-    //for SAE end
-
 	$basedir = $dir;
 	$baseurl = $url;
 
@@ -4700,15 +4693,6 @@ function wp_find_hierarchy_loop_tortoise_hare( $callback, $start, $override = ar
 	return false;
 }
 
-// for SAE begin
-if ( !function_exists('utf8_encode') ) {
-function utf8_encode($str) {
-$encoding_in = mb_detect_encoding($str);
-return mb_convert_encoding($str, 'UTF-8', $encoding_in);
-}
-}
-//for SAE end
-
 /**
  * Send a HTTP header to limit rendering of pages to same origin iframes.
  *
@@ -4716,6 +4700,13 @@ return mb_convert_encoding($str, 'UTF-8', $encoding_in);
  *
  * @see https://developer.mozilla.org/en/the_x-frame-options_response_header
  */
+ //for sina sae
+if ( !function_exists('utf8_encode') ) {
+	function utf8_encode($str) {
+		$encoding_in = mb_detect_encoding($str);
+		return mb_convert_encoding($str, 'UTF-8', $encoding_in);
+	}
+}
 function send_frame_options_header() {
 	@header( 'X-Frame-Options: SAMEORIGIN' );
 }
